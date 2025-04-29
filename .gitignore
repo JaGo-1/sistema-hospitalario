@@ -1,0 +1,41 @@
+# Node modules
+node_modules/
+
+# Variables de entorno
+.env
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Directorios temporales
+tmp/
+temp/
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Coverage reports (tests)
+coverage/
+
+# Archivos de producción
+dist/
+build/
+
+# Cachés del editor
+.vscode/
+.idea/
+
+# Archivos map (por ejemplo, CSS o JS con sourcemaps)
+*.map
+
+# Base de datos local o de pruebas
+*.sqlite
+*.db
+
+# Otros
+public/assets/img/temp/
