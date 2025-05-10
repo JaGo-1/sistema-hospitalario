@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    title= titulo
+    script(src="https://cdn.tailwindcss.com")
+
+  body(class='flex bg-blue-50')
+    //- Sidebar
+    header
+      include components/menu 
+      button#btn_menu(type="button" class="absolute top-0 right-2 md:hidden m-4 cursor-pointer") 
+        img(src="/img/menu-btn.webp", alt="boton-menu" class="w-8")
+
+    main(id='main' class="transition-left duration-300 p-20 md:ml-[20%]")
+      block content
+
+    script(src="/js/navbar.js")
+
+    
