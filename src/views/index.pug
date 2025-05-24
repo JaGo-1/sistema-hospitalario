@@ -1,4 +1,53 @@
 extends layout
 
 block content
-  h1 Bienvenido
+  div(class=' bg-blue-50 min-h-screen')
+    //- Banner
+    div(class='bg-blue-100 rounded-xl p-6 md:p-10 mb-10')
+      h1(class='text-2xl md: text-3xl font-bold text-blue-900 md-2 mb-5') Recepción
+      div(class='max-w-[900px]')
+        p(class='text-blue-900 mb-6')  Utilice este panel para registrar los ingresos de pacientes, gestionar las citas médicas y atender emergencias. Asegúrese de mantener actualizada la información de cada paciente para facilitar el seguimiento y la organización.
+        div(class='flex gap-4')
+          button(class='bg-white text-blue-900 font-semibold py-2 px-4 rounded-xl shadow-sm hover:bg-gray-100 transition') Agendar cita medica
+          button(class='bg-orange-500 text-white font-semibold py-2 px-4 rounded-xl shadow-sm hover:bg-orange-600 transition') Emergencias
+
+    //- Info cards
+    h3(class='text-xl font-semibold text-blue-900 mb-4') Resumen 
+    div(class='grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10')
+      div(class='bg-gradient-to-r from-blue-500 to-blue-400 text-white p-6 rounded-xl shadow flex gap-5 justify-between items-center')
+        p(class='text-5xl font-bold') #{cantidadPacientes}
+        p(class='mt-1 font-semibold flex flex-col leading-tight') 
+          span.tracking-wide Pacientes 
+          span.tracking-wide Ingresados
+
+      div(class='bg-gradient-to-r from-teal-400 to-cyan-400 text-white p-6 rounded-xl shadow flex gap-5 justify-between items-center')
+        p(class='text-5xl font-bold') #{cantidadCitasProgramadas}
+        p(class='mt-1 font-semibold flex flex-col leading-tight') 
+          span.tracking-wide Citas 
+          span.tracking-wide Programadas
+
+      div(class='bg-gradient-to-r from-green-400 to-yellow-300 text-white p-6 rounded-xl shadow flex gap-5 justify-between items-center')
+        p(class='text-5xl font-bold') #{pacientesHoy}
+        p(class='mt-1 font-semibold flex flex-col leading-tight') 
+          span.tracking-wide Ingresos
+          span.tracking-wide hoy
+
+    //- Ultimos pacientes ingresados                
+    div(class='flex items-center justify-between mb-5') 
+      h3(class='text-xl font-semibold text-blue-900') Últimos pacientes ingresados 
+      a(href='/pacientes/nuevo' class='p-2 rounded-full hover:bg-blue-100 transition text-blue-400 hover:text-blue-600')
+        svg(xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-5 h-5')
+          path(stroke-linecap='round' stroke-linejoin='round' d='M12 4.5v15m7.5-7.5h-15')
+
+    div(class='space-y-4')
+      each paciente in pacientes
+        div(class='grid grid-cols-[2fr_1fr_1.5fr_auto] gap-4 bg-white p-4 rounded-xl shadow text-sm items-center text-gray-500')
+          p.font-medium= paciente.nombre
+          p.text-xs= paciente.createdAt.toLocaleTimeString()
+          p= paciente.tipo_ingreso
+          div(class='h-full flex items-center justify-center text-gray-300 hover:text-gray-600 cursor-pointer')
+            svg(xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-5 h-5')
+              path(stroke-linecap='round' stroke-linejoin='round' d='M17.25 6.75L6.75 17.25M17.25 6.75H9.75M17.25 6.75V14.25')
+
+    
+    
