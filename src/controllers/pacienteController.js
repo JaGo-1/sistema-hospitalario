@@ -45,4 +45,17 @@ const getUltimosPacientes = async (req, res) => {
   }
 };
 
-export { getUltimosPacientes };
+const getPacientes = async (req, res) => {
+  try {
+    const pacientes = await Paciente.findAll({
+      order: [["createdAt", "DESC"]],
+    });
+
+    res.render("pacientes", { pacientes });
+  } catch (error) {
+    res.render("pacientes", { pacientes: [] });
+    console.log("Error al obtener todos los pacientes: ", error);
+  }
+};
+
+export { getUltimosPacientes, getPacientes };

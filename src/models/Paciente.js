@@ -9,6 +9,31 @@ Paciente.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    dni: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    sexo: {
+      type: DataTypes.ENUM("M", "F"),
+      allowNull: false,
+    },
+    edad: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    direccion: {
+      type: DataTypes.STRING,
+    },
+    telefono: {
+      type: DataTypes.STRING,
+    },
+    contacto_emergencia: {
+      type: DataTypes.STRING,
+    },
+    telefono_emergencia: {
+      type: DataTypes.STRING,
+    },
     tipo_ingreso: {
       type: DataTypes.STRING,
       allowNull: false,

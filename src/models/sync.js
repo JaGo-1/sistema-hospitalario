@@ -1,5 +1,9 @@
 import sequelize from "./db.js";
 import Paciente from "./Paciente.js";
+import Admision from "./Admision.js";
+import setRelations from "./relations.js";
+
+setRelations();
 
 async function syncModels() {
   try {
@@ -10,4 +14,4 @@ async function syncModels() {
   }
 }
 
-export { Paciente, syncModels };
+export { Paciente, Admision, syncModels };
