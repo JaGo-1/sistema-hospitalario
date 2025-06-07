@@ -4,7 +4,7 @@ block content
     div(class='w-full')
         div(class='flex justify-between items-center mb-5')
             h2(class="text-2xl font-bold text-gray-800") Pacientes
-            button(class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 transition") Nuevo Paciente
+            a( href='/admisiones/nueva' class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 transition") Nuevo Paciente
 
         div(class="p-8 bg-white rounded-xl shadow")
 
@@ -45,7 +45,7 @@ block content
                                     input(type="checkbox")
                                 td(class="px-6 py-4 flex items-center gap-2")
                                     span(class="font-medium")= paciente.nombre
-                                td(class="px-6 py-4")= paciente.documento
+                                td(class="px-6 py-4")= paciente.dni
                                 td(class="px-6 py-4")= paciente.telefono
                                 td(class="px-6 py-4")
                                     if paciente.estado == 'Activo'

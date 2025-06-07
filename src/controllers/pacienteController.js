@@ -1,29 +1,38 @@
 import Paciente from "../models/Paciente.js";
+import Admision from "../models/Admision.js";
 import { Op } from "sequelize";
 
 const getUltimosPacientes = async (req, res) => {
   try {
-    //Obtiene los cuatro ultimos pacientes
+    // Últimos 4 pacientes admitidos (ordenados por fecha de admisión)
     const pacientes = await Paciente.findAll({
-      order: [["createdAt", "DESC"]],
+      include: {
+        model: Admision,
+        where: { estado: "Activa" },
+        required: true,
+      },
+      order: [[Admision, "createdAt", "DESC"]],
       limit: 4,
     });
 
-    //Obtiene la cantidad de pacientes en la bd
+    // Total de pacientes registrados
     const cantidadPacientes = await Paciente.count();
 
-    //Obtiene cantidad de pacientes que lleguen por citas programadas
-    const cantidadCitasProgramadas = await Paciente.count({
+    // Cantidad de pacientes admitidos por "Programado"
+    const cantidadCitasProgramadas = await Admision.count({
       where: {
-        tipo_ingreso: "Cita programada",
+        tipo_ingreso: "Programado",
       },
     });
 
-    //Obtiene cantidad de pacientes en el dia
-    const pacientesHoy = await Paciente.count({
+    // Pacientes admitidos hoy (por fecha de admisión)
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
+
+    const pacientesHoy = await Admision.count({
       where: {
         createdAt: {
-          [Op.gte]: new Date().setHours(0, 0, 0, 0),
+          [Op.gte]: hoy,
         },
       },
     });
@@ -35,7 +44,7 @@ const getUltimosPacientes = async (req, res) => {
       pacientesHoy,
     });
   } catch (error) {
-    console.log("pacienteController: error: ", error);
+    console.log("Error en getUltimosPacientes: ", error);
     res.render("index", {
       pacientes: [],
       cantidadPacientes: 0,
@@ -48,13 +57,14 @@ const getUltimosPacientes = async (req, res) => {
 const getPacientes = async (req, res) => {
   try {
     const pacientes = await Paciente.findAll({
+      include: Admision,
       order: [["createdAt", "DESC"]],
     });
 
     res.render("pacientes", { pacientes });
   } catch (error) {
-    res.render("pacientes", { pacientes: [] });
     console.log("Error al obtener todos los pacientes: ", error);
+    res.render("pacientes", { pacientes: [] });
   }
 };
 

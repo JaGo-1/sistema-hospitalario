@@ -34,10 +34,6 @@ Paciente.init(
     telefono_emergencia: {
       type: DataTypes.STRING,
     },
-    tipo_ingreso: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
   },
   {
     sequelize,
