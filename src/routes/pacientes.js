@@ -1,7 +1,7 @@
-import express from "express";
+import { Router } from "express";
 import { getPacientes } from "../controllers/pacienteController.js";
 
-const router = express.Router();
+const router = Router();
 
 router.get("/", getPacientes);
 
