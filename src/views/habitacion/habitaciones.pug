@@ -1,0 +1,32 @@
+extends ../layout
+
+block content
+  div(class="bg-blue-50 min-h-screen p-6")
+    h1(class="text-2xl md:text-3xl font-bold text-blue-900 mb-8") Habitaciones
+
+    each habitacion in habitaciones
+      div(class="bg-white rounded-xl shadow p-6 mb-10")
+        h2(class="text-xl font-semibold text-blue-800 mb-4") Habitación #{habitacion.numero} - Ala #{habitacion.ala}
+
+        table(class="w-full text-sm text-left text-gray-500")
+          thead(class="text-xs text-gray-700 uppercase bg-gray-100")
+            tr
+              th(class="px-4 py-3") N°
+              th(class="px-4 py-3") Ocupada
+              th(class="px-4 py-3") Paciente
+              th(class="px-4 py-3") Higienizada
+              th(class="px-4 py-3") Actualizar higienización
+          tbody
+            each cama in habitacion.Camas
+              tr(class="bg-white border-b hover:bg-gray-50 transition")
+                td(class="px-4 py-2") #{cama.numero}
+                td(class="px-4 py-2") #{cama.ocupada ? 'Sí' : 'No'}
+                td(class="px-4 py-2")
+                  if cama.Admision
+                    = cama.Admision.Paciente.apellido + ", " + cama.Admision.Paciente.nombre
+                  else
+                    i.text-gray-400 Libre
+                td(class="px-4 py-2") #{cama.higienizada ? 'Sí' : 'No'}
+                td(class="px-4 py-2")
+                  form(method="POST", action=`/habitaciones/camas/${cama.id}/higienizar`)
+                    button(type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-3 rounded transition") Actualizar

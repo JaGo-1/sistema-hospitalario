@@ -4,6 +4,7 @@ import { syncModels } from "./src/models/sync.js";
 import indexRoutes from "./src/routes/index.js";
 import pacienteRoutes from "./src/routes/pacientes.js";
 import admisionRoutes from "./src/routes/admision.js";
+import habitacionRoutes from "./src/routes/habitacion.js";
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use(express.static("public"));
 app.use("/", indexRoutes);
 app.use("/pacientes", pacienteRoutes);
 app.use("/admisiones", admisionRoutes);
+app.use("/habitaciones", habitacionRoutes);
 
 //Inicio del servidor
 syncModels(); //sincronizar modelos
