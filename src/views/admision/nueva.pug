@@ -7,6 +7,19 @@ block content
     form(action="/admisiones/crear", method="POST" class="space-y-4")
       
       div
+        label(for="tipo_ingreso" class="block text-gray-700 font-medium mb-1") 
+          | Tipo de ingreso
+        select(name="tipo_ingreso" id="tipo_ingreso" class="w-full rounded-lg border border-gray-300 py-2 px-4 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500")
+          option(value="Programado") Programado
+          option(value="Emergencia") Emergencia
+          option(value="Derivacion") Derivación
+
+      div
+        label(class="inline-flex items-center space-x-2")
+          input#proveniente_guardia(type="checkbox", name="proveniente_guardia" class="form-checkbox h-5 w-5 text-blue-600")
+          span(class="text-gray-700") Proviene de guardia
+
+      div
         label(for="nombre" class="block text-gray-700 font-medium mb-1") 
           | Nombre
         input(type="text", name="nombre", required class="w-full rounded-lg border border-gray-300 py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500")
@@ -23,11 +36,31 @@ block content
         input(type="text", name="dni", required class="w-full rounded-lg border border-gray-300 py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500")
 
       div
+        label(for="edad" class="block text-gray-700 font-medium mb-1") 
+          | Edad
+        input(type="text", name="edad", required class="w-full rounded-lg border border-gray-300 py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500")
+
+      div
         label(for="sexo" class="block text-gray-700 font-medium mb-1") 
           | Sexo
         select(name="sexo" class="w-full rounded-lg border border-gray-300 py-2 px-4 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500")
           option(value="M") Masculino
           option(value="F") Femenino
+
+      div
+        label(for="direccion" class="block text-gray-700 font-medium mb-1") 
+          | Dirección
+        input(type="text", name="direccion", required class="w-full rounded-lg border border-gray-300 py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500")
+
+      div
+        label(for="telefono" class="block text-gray-700 font-medium mb-1") 
+          | Teléfono
+        input(type="text", name="telefono", required class="w-full rounded-lg border border-gray-300 py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500")
+
+      div
+        label(for="telefono_emergencia" class="block text-gray-700 font-medium mb-1") 
+          | Teléfono de emergencia
+        input(type="text", name="telefono_emergencia", required class="w-full rounded-lg border border-gray-300 py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500")
 
       div
         label(for="motivo" class="block text-gray-700 font-medium mb-1") 

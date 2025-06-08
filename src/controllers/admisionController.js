@@ -15,36 +15,78 @@ export const formularioAdmision = async (req, res) => {
 };
 
 export const crearAdmision = async (req, res) => {
-  const { nombre, apellido, dni, sexo, motivo, camaId } = req.body;
-
-  let paciente = await Paciente.findOne({ where: { dni } });
-  if (!paciente) {
-    paciente = await Paciente.create({ nombre, apellido, dni, sexo });
-  }
-
-  const cama = await Cama.findByPk(camaId);
-  if (!cama || cama.ocupada || !cama.higienizada) {
-    return res.send("Cama no disponible");
-  }
-
-  const camaOcupadaPorPacienteOtroSexo = await Admision.findOne({
-    where: { camaId },
-    include: [{ model: Cama }],
-  });
-
-  if (
-    camaOcupadaPorPacienteOtroSexo &&
-    camaOcupadaPorPacienteOtroSexo.Cama.sexoPaciente !== sexo
-  ) {
-    return res.send("La cama está ocupada por paciente de sexo distinto.");
-  }
-
-  const admision = await Admision.create({
+  const {
+    nombre,
+    apellido,
+    edad,
+    dni,
+    sexo,
+    direccion,
+    telefono,
+    telefono_emergencia,
+    tipo_ingreso,
     motivo,
-    PacienteId: paciente.id,
-    CamaId: cama.id,
-  });
-  await cama.update({ ocupada: true, sexoPaciente: sexo });
+    camaId,
+    proveniente_guardia,
+  } = req.body;
+
+  const provieneDeGuardia = proveniente_guardia === "on";
+
+  if (!provieneDeGuardia) {
+    if (!nombre || !apellido || !edad || !dni || !sexo)
+      return res.status(400).send("Faltan datos obligatorios del paciente");
+
+    let paciente = await Paciente.findOne({ where: { dni } });
+    if (!paciente) {
+      paciente = await Paciente.create({
+        nombre,
+        apellido,
+        edad,
+        dni,
+        sexo,
+        direccion,
+        telefono,
+        telefono_emergencia,
+        proveniente_guardia: false,
+      });
+    }
+
+    const cama = await Cama.findByPk(camaId);
+    if (!cama || cama.ocupada || !cama.higienizada) {
+      return res.send("Cama no disponible");
+    }
+
+    const camaOcupadaPorPacienteOtroSexo = await Admision.findOne({
+      where: { camaId },
+      include: [{ model: Cama }],
+    });
+
+    if (
+      camaOcupadaPorPacienteOtroSexo &&
+      camaOcupadaPorPacienteOtroSexo.Cama.sexoPaciente !== sexo
+    ) {
+      return res.send("La cama está ocupada por paciente de sexo distinto.");
+    }
+
+    const admision = await Admision.create({
+      motivo,
+      tipo_ingreso,
+      PacienteId: paciente.id,
+      estado,
+      CamaId: cama.id,
+    });
+
+    await cama.update({ ocupada: true, sexoPaciente: sexo });
+  } else {
+    await Admision.create({
+      tipo_ingreso: "Emergencia",
+      motivo: motivo || "Derivado de guardia",
+      PacienteId: null,
+      CamaId: null,
+      estado: "Activa",
+      proveniente_guardia: true,
+    });
+  }
 
   res.redirect("/admisiones/nueva");
 };
@@ -54,7 +96,7 @@ export const cancelarAdmision = async (req, res) => {
   if (admision) {
     const cama = await Cama.findByPk(admision.CamaId);
     await cama.update({ ocupada: false, sexoPaciente: null });
-    await admision.update({ estado: "cancelada" });
+    await admision.update({ estado: "Cancelada" });
   }
   res.redirect("/admisiones/nueva");
 };

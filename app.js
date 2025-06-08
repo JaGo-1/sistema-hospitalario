@@ -7,6 +7,9 @@ import admisionRoutes from "./src/routes/admision.js";
 
 const app = express();
 
+//Middleware
+app.use(express.urlencoded({ extended: true }));
+
 //Configuracion de PUG
 app.set("view engine", "pug");
 app.set("views", "./src/views");

@@ -9,6 +9,10 @@ Paciente.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
+    apellido: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     dni: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -26,9 +30,6 @@ Paciente.init(
       type: DataTypes.STRING,
     },
     telefono: {
-      type: DataTypes.STRING,
-    },
-    contacto_emergencia: {
       type: DataTypes.STRING,
     },
     telefono_emergencia: {
