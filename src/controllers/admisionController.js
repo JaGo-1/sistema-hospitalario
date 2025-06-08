@@ -9,6 +9,7 @@ export const formularioAdmision = async (req, res) => {
       ocupada: false,
       higienizada: true,
     },
+    include: Habitacion,
   });
   res.render("admision/nueva", { camas });
 };

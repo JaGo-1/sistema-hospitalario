@@ -51,18 +51,9 @@ async function seed() {
   const habitacionB = await Habitacion.create({ numero: "102", ala: "B" });
 
   // Camas
-  const cama1 = await Cama.create({
-    numero: "1",
-    habitacion_id: habitacionA.id,
-  });
-  const cama2 = await Cama.create({
-    numero: "2",
-    habitacion_id: habitacionA.id,
-  });
-  const cama3 = await Cama.create({
-    numero: "1",
-    habitacion_id: habitacionB.id,
-  });
+  const cama1 = await habitacionA.createCama({ numero: "1" });
+  const cama2 = await habitacionA.createCama({ numero: "2" });
+  const cama3 = await habitacionB.createCama({ numero: "1" });
 
   // Admisiones
   await Admision.create({
