@@ -102,3 +102,25 @@ export const cancelarAdmision = async (req, res) => {
   }
   res.redirect("/admisiones/nueva");
 };
+
+export const mostrarAdmisiones = async (req, res) => {
+  try {
+    const admisiones = await Admision.findAll({
+      include: [
+        {
+          model: Paciente,
+        },
+        {
+          model: Cama,
+          include: [Habitacion],
+        },
+      ],
+      order: [["createdAt", "DESC"]],
+    });
+
+    res.render("admision/admisiones", { admisiones });
+  } catch (error) {
+    console.error("Error al obtener admisiones:", error);
+    res.status(500).send("Error del servidor");
+  }
+};

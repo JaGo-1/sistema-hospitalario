@@ -1,0 +1,37 @@
+extends ../layout.pug
+
+block content
+  div(class="bg-blue-50 min-h-screen p-6")
+    h1(class="text-2xl md:text-3xl font-bold text-blue-900 mb-8") Lista de admisiones
+
+    div(class="space-y-6")
+      each admision in admisiones
+        div(class="bg-white rounded-xl shadow p-6 text-gray-700")
+          h2(class="text-xl font-semibold text-blue-800 mb-2") #{admision.Paciente.nombre} #{admision.Paciente.apellido}
+          
+          div(class="grid sm:grid-cols-2 gap-x-6 gap-y-2 text-sm")
+            p
+              span(class="font-semibold text-gray-600") DNI: 
+              | #{admision.Paciente.dni}
+            p
+              span(class="font-semibold text-gray-600") Edad: 
+              | #{admision.Paciente.edad} años
+            p
+              span(class="font-semibold text-gray-600") Tipo de ingreso: 
+              | #{admision.tipo_ingreso}
+            p
+              span(class="font-semibold text-gray-600") Estado: 
+              | #{admision.estado}
+            p(class="sm:col-span-2")
+              span(class="font-semibold text-gray-600") Motivo: 
+              | #{admision.motivo}
+
+            if admision.Cama
+              p
+                span(class="font-semibold text-gray-600") Cama: 
+                | #{admision.Cama.numero}
+              p
+                span(class="font-semibold text-gray-600") Habitación: 
+                | #{admision.Cama.Habitacion.numero} - Ala #{admision.Cama.Habitacion.ala}
+            else
+              p(class="sm:col-span-2 italic text-gray-400") Cama: No asignada
