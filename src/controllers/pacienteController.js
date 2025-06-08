@@ -68,4 +68,61 @@ const getPacientes = async (req, res) => {
   }
 };
 
-export { getUltimosPacientes, getPacientes };
+const formularioEditarPaciente = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const paciente = await Paciente.findByPk(id);
+    if (!paciente) {
+      return res.status(404).send("Paciente no encontrado");
+    }
+
+    res.render("editarPaciente", { paciente });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Error al obtener al paciente");
+  }
+};
+
+const actualizarPaciente = async (req, res) => {
+  const { id } = req.params;
+  const {
+    nombre,
+    apellido,
+    edad,
+    dni,
+    sexo,
+    direccion,
+    telefono,
+    telefono_emergencia,
+  } = req.body;
+
+  try {
+    const paciente = await Paciente.findByPk(id);
+    if (!paciente) {
+      return res.status(404).send("Paciente no encontrado");
+    }
+
+    await paciente.update({
+      nombre,
+      apellido,
+      edad,
+      dni,
+      sexo,
+      direccion,
+      telefono,
+      telefono_emergencia,
+    });
+
+    res.redirect("/pacientes");
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error al actualizar paciente");
+  }
+};
+
+export {
+  getUltimosPacientes,
+  getPacientes,
+  formularioEditarPaciente,
+  actualizarPaciente,
+};

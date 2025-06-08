@@ -11,7 +11,9 @@ export const formularioAdmision = async (req, res) => {
     },
     include: Habitacion,
   });
-  res.render("admision/nueva", { camas });
+  const tipoIngreso = req.query.tipo?.toLowerCase();
+
+  res.render("admision/nueva", { camas, tipoIngreso });
 };
 
 export const crearAdmision = async (req, res) => {
@@ -72,7 +74,7 @@ export const crearAdmision = async (req, res) => {
       motivo,
       tipo_ingreso,
       PacienteId: paciente.id,
-      estado,
+      estado: "Activa",
       CamaId: cama.id,
     });
 

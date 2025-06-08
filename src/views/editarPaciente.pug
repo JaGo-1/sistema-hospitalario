@@ -1,0 +1,56 @@
+extends layout
+
+block content
+  div(class='bg-blue-50 min-h-screen py-10 px-4')
+    div(class='w-full mx-auto bg-white p-8 rounded-xl shadow-md')
+      h1(class='text-2xl font-bold text-blue-900 mb-6') Editar Paciente
+
+      form(action=`/pacientes/${paciente.id}` method="POST" class='space-y-6')
+        // Nombre
+        div
+          label(for="nombre" class='block text-sm font-medium text-blue-900 mb-1') Nombre
+          input(type="text" name="nombre" id="nombre" value=paciente.nombre required class='w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400')
+
+        // Apellido
+        div
+          label(for="apellido" class='block text-sm font-medium text-blue-900 mb-1') Apellido
+          input(type="text" name="apellido" id="apellido" value=paciente.apellido required class='w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400')
+
+        // Edad
+        div
+          label(for="edad" class='block text-sm font-medium text-blue-900 mb-1') Edad
+          input(type="number" name="edad" id="edad" value=paciente.edad required class='w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400')
+
+        // DNI
+        div
+          label(for="dni" class='block text-sm font-medium text-blue-900 mb-1') DNI
+          input(type="text" name="dni" id="dni" value=paciente.dni required class='w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400')
+
+        // Sexo
+        div
+          label(for="sexo" class='block text-sm font-medium text-blue-900 mb-1') Sexo
+          select(name="sexo" id="sexo" required class='w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400')
+            option(value="") Seleccionar...
+            option(value="M" selected=paciente.sexo === 'M') Masculino
+            option(value="F" selected=paciente.sexo === 'F') Femenino
+            option(value="O" selected=paciente.sexo === 'O') Otro
+
+        // Dirección
+        div
+          label(for="direccion" class='block text-sm font-medium text-blue-900 mb-1') Dirección
+          input(type="text" name="direccion" id="direccion" value=paciente.direccion class='w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400')
+
+        // Teléfono
+        div
+          label(for="telefono" class='block text-sm font-medium text-blue-900 mb-1') Teléfono
+          input(type="text" name="telefono" id="telefono" value=paciente.telefono class='w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400')
+
+        // Teléfono de Emergencia
+        div
+          label(for="telefono_emergencia" class='block text-sm font-medium text-blue-900 mb-1') Teléfono de Emergencia
+          input(type="text" name="telefono_emergencia" id="telefono_emergencia" value=paciente.telefono_emergencia class='w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400')
+
+        // Botones
+        div(class='flex justify-end gap-4 pt-4')
+          button(type="submit" class='bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-700 transition') Guardar cambios
+          a(href="/pacientes" class='text-blue-600 font-semibold py-2 px-4 rounded-lg hover:bg-blue-100 transition') Cancelar

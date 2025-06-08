@@ -8,8 +8,8 @@ block content
       div(class='max-w-[900px]')
         p(class='text-blue-900 mb-6')  Utilice este panel para registrar los ingresos de pacientes, gestionar las citas médicas y atender emergencias. Asegúrese de mantener actualizada la información de cada paciente para facilitar el seguimiento y la organización.
         div(class='flex gap-4')
-          button(class='bg-white text-blue-900 font-semibold py-2 px-4 rounded-xl shadow-sm hover:bg-gray-100 transition') Agendar cita medica
-          button(class='bg-orange-500 text-white font-semibold py-2 px-4 rounded-xl shadow-sm hover:bg-orange-600 transition') Emergencias
+          a(href='admisiones/nueva' class='bg-white text-blue-900 font-semibold py-2 px-4 rounded-xl shadow-sm hover:bg-gray-100 transition') Agendar cita medica
+          a(href="admisiones/nueva?tipo=emergencia" class='bg-orange-500 text-white font-semibold py-2 px-4 rounded-xl shadow-sm hover:bg-orange-600 transition') Emergencias
 
     //- Info cards
     h3(class='text-xl font-semibold text-blue-900 mb-4') Resumen 
@@ -45,7 +45,7 @@ block content
           p.font-medium= paciente.nombre
           p.text-xs= paciente.createdAt.toLocaleTimeString()
           p= paciente.tipo_ingreso
-          div(class='h-full flex items-center justify-center text-gray-300 hover:text-gray-600 cursor-pointer')
+          a(href=`/pacientes/editar/${paciente.id}` class='h-full flex items-center justify-center text-gray-300 hover:text-gray-600 cursor-pointer')
             svg(xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='1.5' stroke='currentColor' class='w-5 h-5')
               path(stroke-linecap='round' stroke-linejoin='round' d='M17.25 6.75L6.75 17.25M17.25 6.75H9.75M17.25 6.75V14.25')
 
