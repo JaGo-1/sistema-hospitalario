@@ -1,6 +1,21 @@
 extends ../layout
 
 block content
+
+  if error
+    div(data-alert class="alert-container bg-red-500 text-white px-4 py-3 rounded-md shadow-md max-w-sm w-full fixed top-5 right-5 z-50 overflow-hidden")
+      div(class="flex justify-between items-center gap-4")
+        span #{error}
+        button(type="button" class="text-white font-bold close-btn") ✕
+      div(class="timer-bar h-1 bg-white opacity-50 mt-2 rounded-full")
+
+  if success
+    div(data-alert class="alert-container bg-green-500 text-white px-4 py-3 rounded-md shadow-md max-w-sm w-full fixed top-5 right-5 z-50 overflow-hidden")
+      div(class="flex justify-between items-center gap-4")
+        span #{success}
+        button(type="button" class="text-white font-bold close-btn") ✕
+      div(class="timer-bar h-1 bg-white opacity-50 mt-2 rounded-full")
+
   h1(class="text-2xl font-bold text-gray-800 mb-5") Nueva Admisión
 
   div(class="p-8 bg-white rounded-xl shadow w-full")
@@ -84,4 +99,4 @@ block content
           //- Icono "Plus"
           svg(xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5")
             path(stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15")
-          | Admitir Paciente
+          | Admitir Paciente 
