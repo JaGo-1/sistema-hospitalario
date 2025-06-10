@@ -2,6 +2,20 @@ extends ../layout.pug
 
 block content
   div(class="bg-blue-50 min-h-screen p-6")
+    if error
+      div(data-alert class="bg-red-500 text-white px-4 py-3 rounded-md shadow-md max-w-sm w-full fixed top-5 right-5 z-50")
+        div(class="flex justify-between items-center")
+          span #{error}
+          button(type="button" class="text-white font-bold close-btn ml-4") ✕
+        div(class="timer-bar h-1 bg-white opacity-50 mt-2 rounded-full")
+
+    if success
+      div(data-alert class="bg-green-500 text-white px-4 py-3 rounded-md shadow-md max-w-sm w-full fixed top-5 right-5 z-50")
+        div(class="flex justify-between items-center")
+          span #{success}
+          button(type="button" class="text-white font-bold close-btn ml-4") ✕
+        div(class="timer-bar h-1 bg-white opacity-50 mt-2 rounded-full")
+
     h1(class="text-2xl md:text-3xl font-bold text-blue-900 mb-8") Lista de admisiones
 
     div(class="space-y-6")
@@ -35,3 +49,32 @@ block content
                 | #{admision.Cama.Habitacion.numero} - Ala #{admision.Cama.Habitacion.ala}
             else
               p(class="sm:col-span-2 italic text-gray-400") Cama: No asignada
+          
+          if admision.estado === "Activa"
+            div(class="flex gap-4 mt-4")
+              button(
+                type="button"
+                class="bg-red-500 hover:bg-red-600 text-white text-sm px-4 py-2 rounded-xl transition"
+                data-action="cancelar"
+                data-id=admision.id
+                data-nombre=`${admision.Paciente.nombre} ${admision.Paciente.apellido}`
+              ) Cancelar
+
+              button(
+                type="button"
+                class="bg-green-500 hover:bg-green-600 text-white text-sm px-4 py-2 rounded-xl transition"
+                data-action="alta"
+                data-id=admision.id
+                data-nombre=`${admision.Paciente.nombre} ${admision.Paciente.apellido}`
+              ) Dar de alta
+
+  div(id="modal" class="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center hidden z-50")
+    div(class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md")
+      h2(id="modal-title" class="text-lg font-semibold text-gray-800 mb-4") ¿Estás seguro?
+      p(id="modal-message" class="text-gray-600 mb-6") Esto no se puede deshacer.
+
+      form(id="modal-form" method="POST")
+        div(class="flex justify-end gap-4")
+          button(type="button" id="modal-cancel" class="px-4 py-2 bg-gray-300 rounded-xl hover:bg-gray-400") Cancelar
+          button(type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700") Confirmar
+

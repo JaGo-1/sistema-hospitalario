@@ -129,14 +129,109 @@ const renderError = async (res, mensaje) => {
   });
 };
 
+// export const cancelarAdmision = async (req, res) => {
+//   const admision = await Admision.findByPk(req.params.id);
+//   if (admision) {
+//     const cama = await Cama.findByPk(admision.CamaId);
+//     await cama.update({ ocupada: false, sexoPaciente: null });
+//     await admision.update({ estado: "Cancelada" });
+//   }
+//   res.redirect("/admisiones/nueva");
+// };
+
 export const cancelarAdmision = async (req, res) => {
-  const admision = await Admision.findByPk(req.params.id);
-  if (admision) {
-    const cama = await Cama.findByPk(admision.CamaId);
-    await cama.update({ ocupada: false, sexoPaciente: null });
+  try {
+    const { id } = req.params;
+    const admision = await Admision.findByPk(id);
+
+    if (!admision) {
+      return renderAdmisionesConMensaje(
+        res,
+        "error",
+        "Admisión no encontrada."
+      );
+    }
+
+    if (admision.CamaId) {
+      const cama = await Cama.findByPk(admision.CamaId);
+      if (cama) {
+        await cama.update({ ocupada: false, sexoPaciente: null });
+      }
+    }
+
     await admision.update({ estado: "Cancelada" });
+
+    return renderAdmisionesConMensaje(
+      res,
+      "success",
+      "Admisión cancelada correctamente."
+    );
+  } catch (error) {
+    console.error("Error al cancelar admisión:", error);
+    return renderAdmisionesConMensaje(
+      res,
+      "error",
+      "Ocurrió un error al cancelar la admisión."
+    );
   }
-  res.redirect("/admisiones/nueva");
+};
+
+export const darDeAlta = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const admision = await Admision.findByPk(id);
+
+    if (!admision) {
+      return renderAdmisionesConMensaje(
+        res,
+        "error",
+        "Admisión no encontrada."
+      );
+    }
+
+    if (admision.estado !== "Activa") {
+      return renderAdmisionesConMensaje(
+        res,
+        "error",
+        "Solo se pueden dar de alta admisiones activas."
+      );
+    }
+
+    if (admision.CamaId) {
+      const cama = await Cama.findByPk(admision.CamaId);
+      if (cama) {
+        await cama.update({ ocupada: false, sexoPaciente: null });
+      }
+    }
+
+    await admision.update({ estado: "Finalizada" });
+
+    return renderAdmisionesConMensaje(
+      res,
+      "success",
+      "Admisión dada de alta correctamente."
+    );
+  } catch (error) {
+    console.error("Error al dar de alta admisión:", error);
+    return renderAdmisionesConMensaje(
+      res,
+      "error",
+      "Ocurrió un error al dar de alta la admisión."
+    );
+  }
+};
+
+const renderAdmisionesConMensaje = async (res, tipo, mensaje) => {
+  const admisiones = await Admision.findAll({
+    include: [{ model: Paciente }, { model: Cama, include: [Habitacion] }],
+    order: [["createdAt", "DESC"]],
+  });
+
+  const vars = { admisiones };
+  if (tipo === "error") vars.error = mensaje;
+  if (tipo === "success") vars.success = mensaje;
+
+  res.render("admision/admisiones", vars);
 };
 
 export const mostrarAdmisiones = async (req, res) => {
