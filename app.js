@@ -1,4 +1,5 @@
 import express from "express";
+import "dotenv/config";
 import { syncModels } from "./src/models/sync.js";
 
 import indexRoutes from "./src/routes/index.js";
@@ -25,7 +26,7 @@ app.use("/habitaciones", habitacionRoutes);
 
 //Inicio del servidor
 syncModels(); //sincronizar modelos
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server on PORT ${PORT}`);
 });
