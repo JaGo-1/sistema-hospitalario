@@ -13,59 +13,59 @@ async function seed() {
   // Pacientes
   const pacientes = await Paciente.bulkCreate([
     {
-      nombre: "Juan",
-      apellido: "Pérez",
-      dni: "12345678",
-      edad: 30,
+      nombre: "Martín",
+      apellido: "Alvarez",
+      dni: "28546321",
+      edad: 45,
       sexo: "M",
-      direccion: "Calle Falsa 123",
-      telefono: "2664000001",
-      telefono_emergencia: "2664000011",
+      direccion: "San Martín 456",
+      telefono: "2664001010",
+      telefono_emergencia: "2664001910",
     },
     {
-      nombre: "Ana",
-      apellido: "Gómez",
-      dni: "87654321",
-      edad: 28,
+      nombre: "Sofía",
+      apellido: "Fernández",
+      dni: "37482910",
+      edad: 33,
       sexo: "F",
-      direccion: "Av. Siempre Viva 742",
-      telefono: "2664000002",
-      telefono_emergencia: "2664000021",
+      direccion: "Rivadavia 789",
+      telefono: "2664002020",
+      telefono_emergencia: "2664002920",
     },
     {
-      nombre: "Carlos",
-      apellido: "Díaz",
-      dni: "11223344",
-      edad: 25,
+      nombre: "Diego",
+      apellido: "Moreno",
+      dni: "19827364",
+      edad: 60,
       sexo: "M",
-      direccion: "Mitre 100",
-      telefono: "2664000003",
-      telefono_emergencia: "2664000031",
+      direccion: "Lavalle 321",
+      telefono: "2664003030",
+      telefono_emergencia: "2664003930",
     },
     {
-      nombre: "Lucía",
-      apellido: "Martínez",
-      dni: "44332211",
-      edad: 19,
+      nombre: "Camila",
+      apellido: "Ramírez",
+      dni: "47281937",
+      edad: 26,
       sexo: "F",
-      direccion: "Belgrano 456",
-      telefono: "2664000004",
-      telefono_emergencia: "2664000041",
+      direccion: "Paso de los Andes 210",
+      telefono: "2664004040",
+      telefono_emergencia: "2664004940",
     },
   ]);
 
   // Habitaciones
   const habitaciones = await Habitacion.bulkCreate([
-    { numero: "101", ala: "Ala Norte" },
-    { numero: "102", ala: "Ala Norte" },
-    { numero: "201", ala: "Ala Sur" },
-    { numero: "202", ala: "Ala Sur" },
-    { numero: "301", ala: "Pediatría" },
-    { numero: "302", ala: "Pediatría" },
-    { numero: "401", ala: "Maternidad" },
-    { numero: "402", ala: "Maternidad" },
-    { numero: "501", ala: "Cuidados Intensivos" },
-    { numero: "502", ala: "Cuidados Intensivos" },
+    { numero: "101", ala: "Clínica Médica" }, // camas[0] camas[1]
+    { numero: "102", ala: "Clínica Médica" }, // camas[2]
+    { numero: "201", ala: "Cirugía" }, // camas[3] camas[4]
+    { numero: "202", ala: "Cirugía" }, // camas[5]
+    { numero: "301", ala: "Pediatría" }, // camas[6] camas[7]
+    { numero: "302", ala: "Pediatría" }, // camas[8]
+    { numero: "401", ala: "Maternidad" }, // camas[9] camas[10]
+    { numero: "402", ala: "Maternidad" }, // camas[11]
+    { numero: "501", ala: "Terapia Intensiva" }, // camas[12] camas[13]
+    { numero: "502", ala: "Terapia Intensiva" }, // camas[14]
   ]);
 
   // Camas
@@ -87,22 +87,42 @@ async function seed() {
   await Admision.create({
     tipo_ingreso: "Emergencia",
     estado: "Activa",
-    motivo: "Accidente automovilístico",
+    motivo: "Neumonía",
     provienente_guardia: true,
-    PacienteId: pacientes[0].id,
-    CamaId: camas[0].id,
+    PacienteId: pacientes[0].id, // Martin Alvarez
+    CamaId: camas[0].id, // Cama 1 de la habitacion 101
   });
-  await camas[0].update({ ocupada: true, sexoPaciente: "M" });
+  await camas[0].update({ ocupada: true, sexoPaciente: pacientes[0].sexo });
 
   await Admision.create({
     tipo_ingreso: "Programado",
     estado: "Activa",
-    motivo: "Cirugía de rodilla",
+    motivo: "Cesárea programada",
     provienente_guardia: false,
-    PacienteId: pacientes[1].id,
-    CamaId: camas[1].id,
+    PacienteId: pacientes[1].id, // Sofia Fernandez
+    CamaId: camas[9].id, // Cama 1 de la habitacion 401
   });
-  await camas[1].update({ ocupada: true, sexoPaciente: "F" });
+  await camas[9].update({ ocupada: true, sexoPaciente: pacientes[1].sexo });
+
+  await Admision.create({
+    tipo_ingreso: "Emergencia",
+    estado: "Activa",
+    motivo: "Apendicitis",
+    provienente_guardia: false,
+    PacienteId: pacientes[2].id, // Diego Moreno
+    CamaId: camas[3].id, // Cama 1 de la habitacion 201
+  });
+  await camas[3].update({ ocupada: true, sexoPaciente: pacientes[2].sexo });
+
+  await Admision.create({
+    tipo_ingreso: "Programado",
+    estado: "Activa",
+    motivo: "Control postparto",
+    proveniente_guardia: false,
+    PacienteId: pacientes[3].id, // Camila Ramirez
+    CamaId: camas[10].id, // Cama 2 de la habitacion 401
+  });
+  await camas[10].update({ ocupada: true, sexoPaciente: pacientes[3].sexo });
 
   console.log("Datos insertados correctamente.");
   process.exit();
