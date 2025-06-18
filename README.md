@@ -1,22 +1,23 @@
-# 🏥 Sistema Hospitalario
+# Sistema Hospitalario
 
 Este proyecto es una aplicación web para la **gestión de internaciones hospitalarias**. Permite registrar pacientes, administrar ingresos, asignar camas, gestionar habitaciones y turnos médicos.
 
----
-
-## 📌 Funcionalidades principales
-
-- ✅ **Registrar nuevos ingresos de pacientes** (programados, de emergencia o derivados).
-- ✅ **Ver, dar de alta y cancelar admisiones existentes.**
-- ✅ **Asignar camas disponibles** en habitaciones según disponibilidad e higiene.
-- ✅ **Evitar que pacientes de diferente sexo compartan habitación.**
-- ✅ **Editar la información personal de cada paciente.**
-- ✅ **Visualizar y actualizar el estado de higienización de cada cama.**
-- ✅ Interfaz clara y organizada con panel de resumen e historial.
+[Acceder a la aplicación](https://sistema-hospitalario-production-ddb5.up.railway.app/)
 
 ---
 
-## 🧠 Tecnologías utilizadas
+## Funcionalidades principales
+
+-  **Registrar nuevos ingresos de pacientes** (programados, de emergencia o derivados).
+-  **Ver, dar de alta y cancelar admisiones existentes.**
+-  **Asignar camas disponibles** en habitaciones según disponibilidad e higiene.
+-  **Evitar que pacientes de diferente sexo compartan habitación.**
+-  **Editar la información personal de cada paciente.**
+-  **Visualizar y actualizar el estado de higienización de cada cama.**
+
+---
+
+## Tecnologías utilizadas
 
 | Tecnología       | Rol                                        |
 | ---------------- | ------------------------------------------ |
@@ -30,7 +31,7 @@ Este proyecto es una aplicación web para la **gestión de internaciones hospita
 
 ---
 
-## 📁 Estructura del proyecto
+## Estructura del proyecto
 
 ```
 sistema-hospitalario/
@@ -47,7 +48,7 @@ sistema-hospitalario/
 
 ---
 
-## ⚙️ Instalación y uso
+## Instalación y uso
 
 ### 1. Clonar el repositorio
 
@@ -64,9 +65,8 @@ npm install
 
 ### 3. Configurar la base de datos
 
-- Asegurate de tener **MySQL** corriendo.
-- Creá una base de datos (por ejemplo `hospital_db`).
-- Configurá el archivo `src/models/db.js` con tus credenciales:
+- Crear una base de datos (por ejemplo `hospital_db`).
+- Configurar el archivo `src/models/db.js` con tus credenciales:
 
 ```js
 import { Sequelize } from "sequelize";
@@ -82,7 +82,7 @@ export default sequelize;
 ### 4. Cargar datos de prueba (opcional)
 
 ```bash
-node src/seeders/seed.js
+npm seed
 ```
 
 ### 5. Iniciar la aplicación
@@ -91,20 +91,18 @@ node src/seeders/seed.js
 npm start
 ```
 
-Finalmente accedé a [http://localhost:3000](http://localhost:3000)
-
 ---
 
-## 🛠️ Scripts disponibles
+## Scripts disponibles
 
 | Comando                    | Descripción                                       |
 | -------------------------- | ------------------------------------------------- |
 | `npm start`                | Inicia el servidor con Nodemon                    |
-| `node src/seeders/seed.js` | Reinicia la base de datos y carga datos de prueba |
+| `npm seed` | Carga datos de prueba |
 
 ---
 
-## 🗃️ Base de datos
+## Base de datos
 
 Se utilizan las siguientes entidades principales:
 
